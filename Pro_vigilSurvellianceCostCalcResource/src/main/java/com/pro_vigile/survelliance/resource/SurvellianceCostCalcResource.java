@@ -33,7 +33,6 @@ public class SurvellianceCostCalcResource {
 
 	public StreamingOutput survellianceCost(InputStream inputStream)
 			throws ParserConfigurationException, SAXException, IOException {
-		// Subscription subscription =null;
 		ResponseResult responseResult = null;
 		Result result = null;
 
@@ -248,6 +247,6 @@ final class ResponseResult implements StreamingOutput {
 
 		output.write(buffer.toString().getBytes());
 		output.close();
+		}
 	}
-}
 }
