@@ -3,9 +3,10 @@ package com.pro_vigile.survelliance.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -35,135 +36,160 @@ public class SurvellianceCostCalcResource {
 		
 		ResponseResult responseResult = null;
 		Result result = null;
-		double cost = 0;
+		
         result=new Result();
+        List listResult=new ArrayList();
 
 		Subscription subscription = subscriprionRequest(inputStream);
-		if (subscription.getArea() <= 2500 && subscription.getLocation().equals("indoor")
-				&& subscription.getPlan().equals("monthly")) {
-			//result = new Result();
-			cost = 2 * subscription.getArea();
+		if (subscription.getArea() <= 2500 && subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("indoor")) {
+			double cost =(subscription.getArea() * 2);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
+
 
 		}
-
-		if (subscription.getArea() <= 2500 && subscription.getLocation().equals("indoor")
-				&& subscription.getPlan().equals("yearly")) {
-			//result = new Result();
-			cost = 1.5 * subscription.getArea();
+		if (subscription.getArea() <= 2500 && subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("indoor")) {
+			double cost = (int) (subscription.getArea() * 1.5);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-
-		if (subscription.getArea() <= 2500 && subscription.getLocation().equals("outdoor")
-				&& subscription.equals("monthly")) {
-			//result = new Result();
-			cost = 2.5 * subscription.getArea();
+		if (subscription.getArea() <= 2500 && subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("outdoor")) {
+			double cost = (subscription.getArea() * 2.5);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-		if (subscription.getArea() <= 2500 && subscription.getLocation().equals("outdoor")
-				&& subscription.equals("yearly")) {
-			//result = new Result();
-			cost = 2 * subscription.getArea();
+		if (subscription.getArea() <= 2500 && subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("outdoor")) {
+			double cost =(subscription.getArea() * 2);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
+			
 		}
-
 		if (subscription.getArea() > 2500 && subscription.getArea() <= 5000
-				&& subscription.getLocation().equals("indoor")
-				|| subscription.getLocation().equals("outdoor") && subscription.getPlan().equals("monthly")) {
-			//result = new Result();
-			cost = 1.5 * subscription.getArea();
+				&& subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("indoor")) {
+			double cost =(2500 * 2 + (subscription.getArea() - 2500) * 1.5);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-
 		if (subscription.getArea() > 2500 && subscription.getArea() <= 5000
-				&& subscription.getLocation().equals("indoor")
-				|| subscription.getLocation().equals("outdoor") && subscription.getPlan().equals("yearly")) {
-			//result = new Result();
-			cost = 1 * subscription.getArea();
+				&& subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("indoor")) {
+			double cost =(2500 * 1.5 + (subscription.getArea() - 2500) * 1);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-
-		if (subscription.getArea() > 5000 && subscription.getArea() <= 50000
-				&& subscription.getLocation().equals("indoor") && subscription.getPlan().equals("monthly")) {
-			//result = new Result();
-			cost = 1 * subscription.getArea();
+		if (subscription.getArea() > 2500 && subscription.getArea() <= 5000
+				&& subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("outdoor")) {
+			double cost = (2500 * 2.5 + (subscription.getArea() - 2500) * 1.5);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-
-		if (subscription.getArea() > 5000 && subscription.getArea() <= 50000
-				&& subscription.getLocation().equals("outdoor") && subscription.getPlan().equals("monthly")) {
-			//result = new Result();
-			cost = 1.2 * subscription.getArea();
+		if (subscription.getArea() > 2500 && subscription.getArea() <= 5000
+				&& subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("outdoor")) {
+			double cost =(2500 * 2 + (subscription.getArea() - 2500) * 1);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
 
-		if (subscription.getArea() > 5000 && subscription.getArea() <= 50000
-				&& subscription.getLocation().equals("indoor") && subscription.getPlan().equals("yearly")) {
-			//result = new Result();
-			cost = 0.6 * subscription.getArea();
+		if (subscription.getArea() > 5000 && subscription.getArea() < 50000
+				&& subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("indoor")) {
+			int cost = (int) ((2500 * 2) + (2500 * 1.5) + ((subscription.getArea() - 5000) * 1));
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-		if (subscription.getArea() > 5000 && subscription.getArea() <= 50000
-				&& subscription.getLocation().equals("outdoor") && subscription.getPlan().equals("yearly")) {
-			//result = new Result();
-			cost = 0.8 * subscription.getArea();
+		if (subscription.getArea() > 5000 && subscription.getArea() < 50000
+				&& subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("outdoor")) {
+			double cost =(2500 * 2 + 2500 * 1.5 + (subscription.getArea() - 5000) * 1.2);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-
-		if (subscription.getArea() > 50000 && subscription.getLocation().equals("indoor")
-				|| subscription.getLocation().equals("outdoor") && subscription.getPlan().equals("monthly")) {
-			//result = new Result();
-			cost = 0.8 * subscription.getArea();
+		if (subscription.getArea() > 5000 && subscription.getArea() < 50000
+				&& subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("indoor")) {
+			double cost =(2500 * 2 + 2500 * 1.5 + (subscription.getArea() - 5000) * 0.6);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
-
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 		}
-
-		if (subscription.getArea() > 50000 && subscription.getLocation().equals("indoor")
-				|| subscription.getLocation().equals("outdoor") && subscription.getPlan().equals("yearly")) {
-			//result = new Result();
-			cost = 0.5 * subscription.getArea();
+		if (subscription.getArea() > 5000 && subscription.getArea() < 50000
+				&& subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("outdoor")) {
+			double cost =(2500 * 2 + 2500 * 1.5 + (subscription.getArea() - 5000) * 0.8);
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
-			responseResult = new ResponseResult(result);
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
+		}
+		if (subscription.getArea() > 50000 && subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("indoor")) {
+			int cost = (int) (2500 * 2 + 2500 * 1.5 + 45000 * 1 + (subscription.getArea() - 50000) * 0.8);
+			result.setCost(cost);
+			result.setSubscription_id(subscription.getSubscription_id());
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 
 		}
+		if (subscription.getArea() > 50000 && subscription.getPlan().equals("monthly")
+				&& subscription.getLocation().equals("outdoor")) {
+			double cost =(2500 * 2 + 2500 * 1.5 + 45000 * 1.2 + (subscription.getArea() - 50000) * 0.8);
+			result.setCost(cost);
+			result.setSubscription_id(subscription.getSubscription_id());
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
+		}
+		if (subscription.getArea() > 50000 && subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("indoor")) {
+			double cost =(2500 * 2 + 2500 * 1.5 + 45000 * 0.6 + (subscription.getArea() - 50000) * 0.5);
+			result.setCost(cost);
+			result.setSubscription_id(subscription.getSubscription_id());
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
 
+		}
+		if (subscription.getArea() > 50000 && subscription.getPlan().equals("yearly")
+				&& subscription.getLocation().equals("outdoor")) {
+			int cost = (int) (2500 * 2 + 2500 * 1.5 + 45000 * 0.8 + (subscription.getArea() - 50000) * 0.5);
+			result.setCost(cost);
+			result.setSubscription_id(subscription.getSubscription_id());
+			listResult.add(result);
+			//responseResult = new ResponseResult(result);
+		}
+		responseResult=new ResponseResult(listResult);
+		
 		return responseResult;
 
 	}
 
-	public Subscription subscriprionRequest(InputStream inputStream)
+	private Subscription subscriprionRequest(InputStream inputStream)
 			throws ParserConfigurationException, SAXException, IOException {
 		Subscription subscription = null;
 		DocumentBuilderFactory documentBuilderFactory = null;
@@ -171,19 +197,25 @@ public class SurvellianceCostCalcResource {
 		Node rootElement = null;
 		NodeList children = null;
 		Document doc = null;
-		Node child = null;
 		String elementName = null;
 		String elementValue = null;
-
+		
+        
 		documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		builder = documentBuilderFactory.newDocumentBuilder();
 		doc = builder.parse(inputStream);
+		doc.getDocumentElement().normalize();  
 		rootElement = doc.getFirstChild();
-		children = rootElement.getChildNodes();
+		System.out.println(rootElement);
+		 children = rootElement.getChildNodes();
 
+		System.out.println(children);
+	
+       
 		subscription = new Subscription();
 		for (int i = 0; i < children.getLength(); i++) {
-			child = children.item(i);
+			Node child = children.item(i); 
+			
 			if (child.getNodeType() == Node.ELEMENT_NODE) {
 				elementName = child.getNodeName();
 				elementValue = child.getFirstChild().getNodeValue();
@@ -205,24 +237,28 @@ public class SurvellianceCostCalcResource {
 }
 
 final class ResponseResult implements StreamingOutput {
-	private Result result;
+	private List<Result> results;
 
-	public ResponseResult(Result result) {
+	public ResponseResult(List<Result> result) {
 		// TODO Auto-generated constructor stub
-		this.result = result;
+		this.results = result;
 
 	}
 
 	@Override
 	public void write(OutputStream output) throws IOException, WebApplicationException {
+		
 		StringBuffer buffer = null;
+		for (Result result : results) {
+			
+		
 
 		buffer = new StringBuffer();
 		buffer.append("<result><subscription><id>").append(result.getSubscription_id()).append("</id><cost>")
 				.append(result.getCost()).append("</cost>").append("</subscription></result>");
 
 		output.write(buffer.toString().getBytes());
-		output.close();
-
+		//output.close();
+		}
 	}
 }
