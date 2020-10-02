@@ -46,7 +46,7 @@ public class SurvellianceCostCalcResource {
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
 			listResult.add(result);
-			// responseResult = new ResponseResult(result);
+			
 
 		}
 		if (subscription.getArea() <= 2500 && subscription.getPlan().equals("yearly")
@@ -55,7 +55,7 @@ public class SurvellianceCostCalcResource {
 			result.setCost(cost);
 			result.setSubscription_id(subscription.getSubscription_id());
 			listResult.add(result);
-			// responseResult = new ResponseResult(result);
+			
 		}
 		if (subscription.getArea() <= 2500 && subscription.getPlan().equals("monthly")
 				&& subscription.getLocation().equals("outdoor")) {
